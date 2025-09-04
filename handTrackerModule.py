@@ -17,8 +17,6 @@ class handDetector():
     def findHands(self,img,draw=True):
         imgRGB = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
         self.result = self.hands.process(imgRGB)
-        # print(result.multi_hand_landmarks)
-
         if self.result.multi_hand_landmarks:
             for hand in self.result.multi_hand_landmarks:
                 if draw:
