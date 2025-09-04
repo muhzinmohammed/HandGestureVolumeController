@@ -1,6 +1,5 @@
 import cv2
 import mediapipe as mp 
-import time
 
 
 class handDetector():
@@ -33,29 +32,10 @@ class handDetector():
         if self.result.multi_hand_landmarks:
             hand = self.result.multi_hand_landmarks[handNo]
             for id,landMark in enumerate(hand.landmark):
-                h,w,c = img.shape()
-                cx,cy = int(landMark.x*h), int(landMark.y*w)
+                h,w,c = img.shape
+                cx,cy = int(landMark.x*w), int(landMark.y*h)
                 landMarks.append([id,cx,cy])
                 if draw:
                     cv2.circle
         return landMarks
 
-
-def main():
-    pTime = 0
-    cTime = 0
-    cap = cv2.VideoCapture(0)
-    detector = handDetector()
-    while True:
-        success, img = cap.read()
-        detector.findHands(img)
-        
-        cTime = time.time()
-        fps =  1/(cTime-pTime)
-        pTime = cTime
-        
-        cv2.imshow("image",img)
-        cv2.waitKey(1)
-
-if __name__ == "__main__":
-    main()
